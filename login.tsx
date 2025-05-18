@@ -5,6 +5,7 @@ import { loginApi, otpApi } from "./api";
 import { send } from "process";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import { loginAction } from "./action";
 
 export default function Login () {
     const[mobile, setMobile]=useState("");
@@ -13,10 +14,10 @@ export default function Login () {
     const dispatch = useDispatch();
     const router = useRouter();
     const onsubmit=async ()=>{
-       const money=await loginApi(mobile, otp);
-        // console.log(mobile, otp);
-        Cookies.set("token", money.accesstoken);
-        localStorage.setItem("user", JSON.stringify(money.posp_id));
+       const money=await dispatch<any>(loginAction(mobile, otp));
+        // // console.log(mobile, otp);
+        // Cookies.set("token", money.accesstoken);
+        // localStorage.setItem("user", JSON.stringify(money.posp_id));
         console.log(money);
        setMobile("");
        setOtp("");
